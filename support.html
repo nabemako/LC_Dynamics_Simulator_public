@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>LC Dynamics Simulator Support</title>
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f7f9fb;
+      --fg: #18202a;
+      --muted: #5d6a78;
+      --panel: #ffffff;
+      --line: #d9e1ea;
+      --accent: #0a6fb5;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #101820;
+        --fg: #edf3f8;
+        --muted: #aeb9c5;
+        --panel: #17212b;
+        --line: #2a3948;
+        --accent: #69b7ff;
+      }
+    }
+    body {
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Hiragino Sans", "Yu Gothic", "Segoe UI", sans-serif;
+      line-height: 1.7;
+      background: var(--bg);
+      color: var(--fg);
+    }
+    main {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 48px 20px 72px;
+    }
+    header {
+      border-bottom: 1px solid var(--line);
+      margin-bottom: 32px;
+      padding-bottom: 24px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 2rem;
+      line-height: 1.25;
+    }
+    h2 {
+      margin-top: 32px;
+      font-size: 1.25rem;
+    }
+    p, li {
+      color: var(--fg);
+    }
+    .muted {
+      color: var(--muted);
+    }
+    .card {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+    a {
+      color: var(--accent);
+    }
+    code {
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.95em;
+    }
+    nav.lang {
+      font-size: 0.95rem;
+      margin-top: 8px;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>LC Dynamics Simulator Support</h1>
+      <p class="muted">Support information for LC Dynamics Simulator for macOS.</p>
+      <nav class="lang"><a href="#en">English</a></nav>
+    </header>
+
+    <section class="card">
+      <h2>お問い合わせ</h2>
+      <p>
+        サポートが必要な場合は、以下のメールアドレスまでご連絡ください。
+      </p>
+      <p><a href="mailto:nabemako@ybb.ne.jp">nabemako@ybb.ne.jp</a></p>
+    </section>
+
+    <section>
+      <h2>概要</h2>
+      <p>
+        LC Dynamics Simulator は、液晶セルの電圧応答をセル厚方向の1次元モデルで計算し、透過率、容量、セル内部の配向、電位、流速、偏光状態、視野角特性を表示する macOS アプリです。ダイレクタの回転と液晶の流れ（バックフロー）を連成して解きます。研究、設計検討、教育用途での利用を想定しています。
+      </p>
+      <p>
+        TN、STN、ECB、VA など、縦電界で駆動するセルに対応します。IPS・FFS などの横電界方式、上下で異なる表面角（ハイブリッド配向）、界面での屈折は扱いません。
+      </p>
+    </section>
+
+    <section>
+      <h2>動作環境</h2>
+      <ul>
+        <li>macOS 14.0 以降</li>
+        <li>Apple Silicon Mac</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>ドキュメント</h2>
+      <p>
+        操作方法と計算モデルは、以下のPDFをご覧ください。
+      </p>
+      <ul>
+        <li><a href="doc/users_manual.pdf">ユーザーマニュアル（日本語）</a></li>
+        <li><a href="doc/technical_manual.pdf">テクニカルマニュアル（日本語）</a></li>
+        <li><a href="doc/users_manual_en.pdf">User Manual (English)</a></li>
+        <li><a href="doc/technical_manual_en.pdf">Technical Manual (English)</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>お問い合わせ時に含めてほしい情報</h2>
+      <ul>
+        <li>macOS のバージョン</li>
+        <li>アプリのバージョン（アプリメニューの「LC Dynamics Simulatorについて」で確認できます）</li>
+        <li>発生した問題の内容と、問題が再現する操作手順</li>
+        <li>計算条件のパラメータファイル（ファイル &gt; Save Parameters… で保存できます）</li>
+        <li>SIMULATION LOG に表示されたエラーの文面</li>
+        <li>可能であればスクリーンショット</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>よくある確認事項</h2>
+      <ul>
+        <li>
+          計算開始直後は初期配向を計算するため、進捗率ではなく往復するバーが表示されます。条件によって時間がかかりますが、エラーではありません。
+        </li>
+        <li>
+          既定の条件（Accurate、1500ステップ）では、計算に1〜2分程度かかります。条件を探す段階では、Solver タブの Calculation mode を Fast にし、Total steps を減らすと短時間で確認できます。
+        </li>
+        <li>入力値の範囲は検査しません。単位、符号、桁を確認してください。</li>
+        <li>
+          結果のCSVは Excel で開ける形式（UTF-8、BOM付き）です。保存するときは、書き込み権限のあるフォルダを選択してください。
+        </li>
+        <li>
+          計算条件は JSON 形式のパラメータファイルに保存できます。保存したファイルをアプリのアイコンへドロップしても読み込めます。
+        </li>
+        <li>視野角図の極角は液晶層内での伝搬角です。空気中の視野角と比べる場合は、屈折を考慮して換算してください。</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Privacy Policy</h2>
+      <p>
+        プライバシーポリシーは <a href="privacy.html">こちら</a> をご覧ください。
+      </p>
+    </section>
+
+    <hr id="en">
+
+    <section class="card">
+      <h2>Contact</h2>
+      <p>If you need support, please contact us by email.</p>
+      <p><a href="mailto:nabemako@ybb.ne.jp">nabemako@ybb.ne.jp</a></p>
+    </section>
+
+    <section>
+      <h2>Overview</h2>
+      <p>
+        LC Dynamics Simulator is a macOS app that computes the voltage response of a liquid-crystal cell
+        with a one-dimensional model through the cell thickness and displays transmittance, capacitance,
+        internal orientation, potential, flow, polarization, and viewing-angle characteristics.
+        It couples director rotation with liquid-crystal flow (backflow), and is intended for research,
+        design studies, and teaching.
+      </p>
+      <p>
+        It covers TN, STN, ECB, VA, and other cells driven by a vertical field. In-plane switching (IPS, FFS),
+        different surface angles on the two substrates (hybrid alignment), and interface refraction are not modeled.
+      </p>
+    </section>
+
+    <section>
+      <h2>Requirements</h2>
+      <ul>
+        <li>macOS 14.0 or later</li>
+        <li>Mac with Apple silicon</li>
+      </ul>
+    </section>
+
+    <section class="card">
+      <h2>Documentation</h2>
+      <ul>
+        <li><a href="doc/users_manual_en.pdf">User Manual (English)</a></li>
+        <li><a href="doc/technical_manual_en.pdf">Technical Manual (English)</a></li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Please Include</h2>
+      <ul>
+        <li>macOS version and app version (see About LC Dynamics Simulator)</li>
+        <li>What happened, and the steps that reproduce it</li>
+        <li>Your parameter file (File &gt; Save Parameters…)</li>
+        <li>The error text shown in SIMULATION LOG</li>
+        <li>A screenshot, if possible</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Common Questions</h2>
+      <ul>
+        <li>
+          Right after Run, the initial orientation is computed and the progress bar moves back and forth
+          instead of showing a percentage. This can take a while and is not an error.
+        </li>
+        <li>
+          With the defaults (Accurate, 1500 steps) a run takes about 1–2 minutes. While exploring,
+          set Calculation mode to Fast on the Solver tab and reduce Total steps.
+        </li>
+        <li>Input ranges are not checked; please verify units, signs, and magnitudes.</li>
+        <li>Result CSV files open in Excel (UTF-8 with BOM). Choose a writable folder when saving.</li>
+        <li>Parameters can be saved as JSON files and loaded again, also by dropping them on the app icon.</li>
+        <li>Polar angles in viewing-angle maps are propagation angles inside the liquid crystal; convert with refraction in mind when comparing with viewing angles in air.</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>Privacy Policy</h2>
+      <p>See the <a href="privacy.html#en">privacy policy</a>.</p>
+    </section>
+  </main>
+</body>
+</html>
